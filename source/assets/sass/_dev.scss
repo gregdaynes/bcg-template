@@ -14,7 +14,7 @@
 .article-grid__item {
   @extend %grid__item;
   @extend %palm--one-whole;
-  margin-bottom: $gutter--narrow;
+  margin-bottom: $gutter--normal;
 }
 
 .article-grid__article {
@@ -23,20 +23,22 @@
 }
 
 .article__img {
-  width: 120px;
-  float: left;
+  display: none;
 }
 
 .article__title {
   @include typecsset-font-size($size--base);
   margin-bottom: 0;
+  padding-left: 0;
 
 }
 
 .article__text {
-  line-height: 1.2;
+
   margin-bottom: 0;
-  @extend %hide;
+
+@include typecsset-font-size($size--base);
+  line-height: 1.3;
 
 }
 
