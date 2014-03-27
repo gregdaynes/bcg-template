@@ -1,0 +1,38 @@
+.footer-contact {
+  @extend %grid--full;
+  color: $color--white;
+  font-weight: 200;
+
+  border-bottom: 1px solid darken($color--blue, 10%);
+  padding-bottom: $gutter--normal;
+  margin-bottom: $gutter--normal;
+  margin-left: 0;
+}
+
+.footer-contact a {
+  color: $color--white;
+}
+
+.footer-contact .module-header {
+  @extend %hide;
+}
+
+.footer-contact__address {
+  @extend %grid__item;
+  @extend %palm--one-half;
+  @extend %desk--three-quarters;
+}
+
+.footer-contact__communicate {
+  @extend %grid__item;
+  @extend %palm--one-half;
+  @extend %desk--one-quarter;
+}
+
+.footer-contact .section-header {
+  @include typecsset-font-size($size--base);
+  margin: 0;
+  padding-left: 0;
+  color: lighten($color--blue, 50%);
+  text-decoration: underline;
+}

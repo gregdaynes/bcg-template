@@ -30,18 +30,24 @@
 $csswizard-grids-use-silent-classes:    true;
 
 
+$media-queries-supported: true;
+
 // Breakpoints
+$palm:     em(300px);
+$lap:      em(481px);
+$desk:     em(1024px);
 
 $csswizard-grids-breakpoints: (
-    'palm' '(max-width: 480px)',
-    'lap' '(min-width: 481px) and (max-width: 1023px)',
+    'palm' '(min-width: 300px)',
+    'big-palm' '(min-width: 481px)',
+    'lap' '(min-width: 720px)',
     'portable' '(max-width: 1023px)',
     'desk' '(min-width: 1024px)'
 );
 
-$csswizard-grids-breakpoint-has-widths: ('palm', 'lap', 'portable', 'desk');
-$csswizard-grids-breakpoint-has-push:   ('palm', 'lap', 'portable', 'desk');
-$csswizard-grids-breakpoint-has-pull:   ('palm', 'lap', 'portable', 'desk');
+$csswizard-grids-breakpoint-has-widths: ('palm', 'big-palm', 'lap', 'portable', 'desk');
+$csswizard-grids-breakpoint-has-push:   ('palm', 'big-palm', 'lap', 'portable', 'desk');
+$csswizard-grids-breakpoint-has-pull:   ('palm', 'big-palm', 'lap', 'portable', 'desk');
 
 
 // Cool
@@ -116,6 +122,15 @@ $z-index--absolute: 1000;
 
 
 
+// Shadows
+$box-shadow--color: rgba(0,0,0,0.1);
+$box-shadow--left: 0;
+$box-shadow--top: 2px;
+$box-shadow--radius: 0;
+
+$box-shadow: $box-shadow--left $box-shadow--top $box-shadow--radius $box-shadow--color;
+
+$box-shadow--highlight: inset 0 1px 0 rgba(255,255,255,0.1);
 
 
 
@@ -167,45 +182,40 @@ $z-index--absolute: 1000;
 /*------------------------------------*\
     $MIXINS
 \*------------------------------------*/
-@mixin bp($unit-one, $query-one: min-width, $unit-two: "", $query-two: max-width, $target: "") {
-
-
-  // 2 units
-  @if $unit-two != "" {
-
-    // target
+@mixin media-query($unit, $query1: min, $query2: width, $target: "") {
+  $mqtarget: "";
+  // Check if media queries are supported
+  @if $media-queries-supported == true {
     @if $target != "" {
-      @media #{$target} and (#{$query-one}: #{$unit-one}) and (#{$query-two}: #{unit-two}) {
+      @media #{$target} and (#{$query1}-#{$query2}: #{$unit}) {
         @content;
       }
     }
-
-    // no target
     @else {
-      @media (#{$query-one}: #{$unit-one}) and (#{$query-two}: #{$unit-two}) {
+      @media (#{$query1}-#{$query2}: #{$unit}) {
         @content;
       }
     }
   }
-
   @else {
-    // target
-    @if $target != "" {
-      @media #{$target} and (#{$query-one}: #{$unit-one}) {
-        @content;
-      }
-    }
-
-    // no target
-    @else {
-      @media (#{$query-one}: #{$unit-one}) {
-        @content;
-      }
+    #{$no-mq-classname} & {
+      @content;
     }
   }
 }
 
+@mixin vertical-gradient($start: #fff, $stop: #000, $direction: to bottom)
+{
+  background-color: $start;
+  background-image: linear-gradient($direction, $start, $stop);
+}
 
+
+@mixin ir {
+  text-indent: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+}
 
 
 
@@ -221,7 +231,7 @@ $z-index--absolute: 1000;
 /*------------------------------------*\
     $GENERAL
 \*------------------------------------*/
-*{
+* {
     box-sizing: border-box;
 }
 
@@ -229,6 +239,10 @@ body {
 //    width: 90%;
 //    margin: 0 auto;
 //    background-color: rgba(0,0,0,0.1);
+  @include media-query($desk) {
+    width: 1024px;
+    margin: $gutter--normal auto 0;
+  }
 }
 
 blockquote {
@@ -297,54 +311,136 @@ a {
 
 
 
-
-
-/*------------------------------------*\
-    $LAYOUT
-\*------------------------------------*/
-.l-header {
-
-}
-
-.l-banner {
-
-}
-
-.l-component-header {
-
-}
-
-.l-component {
-  margin: $gutter--narrow $gutter--narrow;
-
-}
-
-.l-component-footer {
-
-}
-
-.l-sidebar {
-
-}
-
-.l-footer {
-
-}
-
-.l-sidebar {
-
-}
-
 /*------------------------------------*\
     $MODULES
 \*------------------------------------*/
+@import "m-buttons";
+
 @import "m-site-logo";
 @import "m-navigation";
 @import "m-site-search";
 @import "m-advertisement";
 @import "m-latest-news";
 @import "m-feature-carousel";
+@import "m-article-grid";
+@import "m-featured-video";
+@import "m-newsletter-signup";
+@import "m-twitter";
+@import "m-footer-contact";
+@import "m-footer-nav";
 
+/*------------------------------------*\
+    $LAYOUT
+\*------------------------------------*/
+.l-header {
+
+  @include media-query($desk) {
+    background-color: orange;
+    position: relative;
+  }
+}
+
+
+.l-banner {
+  @include media-query($desk) {
+    width: 1024px;
+    margin: $gutter--narrow auto;
+  }
+}
+.l-banner .advertisement {
+
+  @include media-query($desk) {
+    margin: 0;
+    width: 728px;
+  }
+
+}
+
+.l-main {
+  @extend %clearfix;
+
+  @include media-query($desk) {
+    width: 1024px;
+    position: relative;
+  }
+
+}
+
+.l-component-header {
+
+  @include media-query($desk) {
+    width: 714px;
+    float: left;
+  }
+}
+
+.l-component {
+  margin: $gutter--narrow $gutter--narrow;
+
+  @include media-query($desk) {
+    width: 714px;
+    margin: 0;
+    float: left;
+  }
+}
+
+.l-component-footer {
+  float: left;
+  width: 714px;
+}
+
+.l-component-footer  .advertisement {
+  border-bottom: 1px solid $color--gray-lighter;
+  padding-bottom: $gutter--narrow;
+  display: none;
+}
+
+.l-component-footer__grid {
+    @extend %grid;
+}
+.l-component-footer__cell {
+    @extend %grid__item;
+    @extend %lap--one-half;
+}
+.l-component-footer__cell.lap--one-whole {
+    @extend %lap--one-whole
+}
+
+
+.l-sidebar {
+  @include media-query($desk) {
+    width: 300px;
+    position: absolute;
+    right: 0;
+    top: 0;
+    bottom: 0;
+  }
+}
+
+.l-sidebar .advertisement {
+  @extend %hide;
+
+  @include media-query($desk) {
+    margin: 0 0 $gutter--normal;
+    height: inherit;
+    text-indent: 0;
+    white-space: normal;
+    overflow: visible;
+  }
+}
+
+.l-footer {
+  background-color: $color--blue;
+  padding: $gutter--narrow;
+}
+
+
+.l-copyright {
+  background-color: darken($color--blue, 10%);
+  color: lighten($color--blue, 10%);
+  text-align: center;
+  @include typecsset-font-size( $size--small );
+}
 
 ////////////////////////////////////
 @import "dev";

@@ -1,5 +1,11 @@
 .site-logo {
   background-color: $color--blue;
+
+  @include media-query($desk) {
+    width: 169px;
+    height: 169px;
+  }
+
 }
 
 .site-logo h1 {
@@ -8,7 +14,13 @@
   color: $color--white;
   text-align: center;
 
-  @include typecsset-font-size($size--base);
 
+  @include typecsset-font-size($size--base);
   line-height: $size--touch-target;
+
+  @include media-query($desk) {
+
+    @include ir;
+  }
 }
+

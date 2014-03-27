@@ -70,6 +70,11 @@
 
 .quick-nav {
   padding: 0 $gutter--narrow;
+
+  @include media-query($desk) {
+    padding: 0;
+    margin-bottom: $gutter--narrow;
+  }
 }
 
 .quick-nav .module-header {
@@ -80,13 +85,13 @@
   @extend %list;
   @extend %grid--full;
 
-  // border: 0 solid $color--white;
-  // border-width: 0 0 1px 1px;
+
 }
 
 .quick-nav__item {
   @extend %grid__item;
   @extend %palm--one-half;
+  @extend %lap--one-fifth;
 }
 
 .quick-nav__link {
@@ -96,9 +101,25 @@
   color: $color--white;
   text-decoration: none;
   line-height: $size--touch-target;
+  border: 1px solid $color--white;
+  border-width: 0 1px 1px 0;
 
-  border: 0 solid $color--white;
-  border-width: 1px 1px 0 0;
+  @include vertical-gradient( lighten($color--green, 3%), $color--green);
+
+  @include media-query($desk) {
+
+  }
+}
+
+.quick-nav__link:hover,
+.quick-nav__link:focus {
+  color: $color--white;
+  background-image: none;
+}
+
+.quick-nav__link:active {
+  box-shadow: inset $box-shadow;
+  background-color: darken($color--green, 5%);
 }
 
 
@@ -121,7 +142,7 @@
 
 
 .disable-scroll {
-  @include bp($extra-large, max-width) {
+  @include media-query($desk) {
     position: fixed;
   }
 }
@@ -140,7 +161,7 @@
   display: none;
 
   &:checked {
-    & ~ .l-component .site-nav { left: 0; }
+    & ~ .l-main .l-component .site-nav { left: 0; }
 
     & ~ .site-nav__label {
       top: 0;
@@ -148,6 +169,11 @@
       margin-left: -$size--touch-target;
       background-color: $color--gray-darker;
       // background-color: $color--white;
+
+      @include media-query($lap) {
+        left: 50%;
+      }
+
     }
 
     & ~ .site-nav__label .lines {
@@ -178,7 +204,7 @@
   text-indent: -999em;
   background-color: $color--blue;
 
-  @include bp($extra-large, min-width) {
+  @include media-query($desk) {
     display: none;
   }
 
@@ -215,8 +241,9 @@
   -webkit-overflow-scrolling: touch; // enable intertia scrolling
   background-color: $color--gray-darker;
   bottom: 0;
-  color: $color--white;
-  left: -$size--menu-width;
+  color: $color--gray-light;
+  left: -100%;
+/*   left: 0; */
   margin-left: -$size--touch-target;
   overflow: scroll;
   padding-left: $size--touch-target;
@@ -225,24 +252,29 @@
   width: 100%;
   z-index: 1;
 
-  @include bp($extra-large, min-width) {
+  @include media-query($lap) {
+    width: 50%;
+  }
+
+  @include media-query($desk) {
     clear: both;
     left: 0;
     position: relative;
     margin-left: 0;
     padding-left: 0;
     overflow: visible;
-    background-color: $color--white;
-    color: $color--black;
+    background-color: $color--gray-lighter;
+    width: 100%;
+
   }
 
   a {
-    color: $color--white;
+    color: $color--gray-darker;
     display: block;
     text-decoration: none;
     line-height: $size--touch-target;
 
-    @include bp($extra-large, min-width) {
+    @include media-query($desk) {
       padding: 0 $gutter--narrow;
 
     }
@@ -265,27 +297,30 @@
     border-top: 1px solid $color--gray;
   }
 
-  .site-nav__item {
-    padding: 0 $gutter--narrow;
-  }
-
   .site-nav__list {
     @extend %list;
   }
 
   > .site-nav__list {
-    @include bp($extra-large, min-width) {
+    @include media-query($desk) {
       display: -webkit-flex;
       display: flex;
       width: 100%;
+
+       border-left: 1px solid $color--gray-light;
+
     }
   }
 
   > .site-nav__list > .site-nav__item {
-    @include bp($extra-large, min-width) {
+    @include media-query($desk) {
       -webkit-flex-grow: 1;
       flex-grow: 1;
       text-align: center;
+
+      &:first-child {
+
+      }
 
     }
   }
@@ -293,7 +328,7 @@
   .site-nav__group {
     @extend %list;
 
-    @include bp($extra-large, min-width) {
+    @include media-query($desk) {
       display: block;
       list-style: none;
       padding: 0;
@@ -311,7 +346,7 @@
     }
 
     .site-nav__item {
-      @include bp($extra-large, min-width) {
+      @include media-query($desk) {
         padding: 0; // $gutter--skinny;
         box-sizing: 0;
         margin: 0 $gutter--skinny;
@@ -328,51 +363,117 @@
   }
 
   .site-nav__group .site-nav__group {
-    @include bp($extra-large, min-width) {
+    @include media-query($desk) {
       display: block;
     }
 
     .site-nav__item {
-      @include bp($extra-large, min-width) {
+      @include media-query($desk) {
         display: block;
         width: 100%;
       }
     }
   }
 
-  .site-nav__panel {
-    @include bp($extra-large, min-width) {
+  .site-nav__item.deeper.parent {
+    border-top: 1px solid $color--gray;
+    margin: 0 $gutter--narrow;
+    padding: $gutter--narrow 0 0;
+
+    @include media-query($desk) {
+      border: none;
+      margin: 0;
+      padding: 0;
+
+      border: 1px solid $color--gray-light;
+      border-top-color: $color--gray-light;
+      border-left: none;
+    }
+  }
+
+
+  .site-nav__item.deeper.parent:first-child {
+    margin-top: 0;
+    border-top: none;
+
+    @include media-query($desk) {
+      border-top: 1px solid $color--gray-light;
+    }
+  }
+
+  .site-nav__item > .site-nav__list .site-nav__item  {
+    border-left: 2px solid $color--gray-dark;
+    padding-left: $gutter--narrow;
+
+    @include media-query($desk) {
+      border: none;
+      padding: 0;
+    }
+  }
+
+  .site-nav__item > .site-nav__list  {
+    padding-bottom: $gutter--normal;
+
+    @include media-query($desk) {
+      padding: 0;
+    }
+  }
+
+
+  .site-nav__item > .site-nav__list {
+    border-bottom: 1px solid $color--gray-dark;
+
+    @include media-query($desk) {
+      border: none;
+    }
+  }
+
+  .site-nav__list.nav-child {
+    @include media-query($desk) {
       position: absolute;
       left: -999em;
-      background-color: $color--white;
+      background-color: $color--blue;
       text-align: left;
       display: block;
-      width: 100%;
-      padding: $gutter--skinny;
+      border: 1px solid lighten($color--blue, 5%);
+      box-shadow: $box-shadow;
+      border-top: none;
+      margin-left: -1px;
+      margin-top: -1px;
       overflow: hidden;
       top: 100%;
     }
+  }
+
+  .site-nav__list.nav-child a {
+    color: $color--white;
   }
 
   .site-nav__item {
     &:hover > a,    &:focus > a,    &:active > a,    &.has-focus > a,
     &:hover > h2 a, &:focus > h2 a, &:active > h2 a, &.has-focus > h2 a,
     &:hover > h3 a, &:focus > h3 a, &:active > h3 a, &.has-focus > h3 a {
-      color: $color--green;
+      color: $color--white;
+
+      @include media-query($desk) {
+/*         color: $color--white; */
+        background-color: $color--blue;
+        color: $color--green;
+      }
     }
 
     &:hover,
     &:focus,
     &:active,
     &.has-focus {
-      .site-nav__panel {
-        left: 0;
+      .site-nav__list.nav-child {
+        left: auto;
       }
     }
   }
 
   .site-nav > .site-nav__list > .site-nav__item {
-    @include bp($extra-large, min-width) {
+    @include media-query($desk) {
       &:hover,
       &:focus,
       &:active,

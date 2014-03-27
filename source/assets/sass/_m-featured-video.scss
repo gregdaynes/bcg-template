@@ -1,0 +1,13 @@
+.featured-video {
+  margin: $gutter--normal $gutter--narrow 0;
+  padding-top: $gutter--skinny;
+}
+
+.featured-video .module-header {
+  @include typecsset-font-size($size--base);
+  margin-bottom: 0;
+}
+
+.featured-video iframe {
+  width: 100%;
+}

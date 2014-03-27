@@ -414,6 +414,17 @@ $class-type:            unquote(".") + $csswizard-grids-namespace !global;
 
 
     /**
+     * Sevenths
+     */
+    #{$class-type}#{$namespace}one-seventh       { width:14.2857%; }
+    #{$class-type}#{$namespace}two-sevenths      { width:28.5714%; }
+    #{$class-type}#{$namespace}three-sevenths    { width:42.8571%; }
+    #{$class-type}#{$namespace}four-sevenths     { width:57.1428%; }
+    #{$class-type}#{$namespace}five-sevenths     { width:71.4285%; }
+    #{$class-type}#{$namespace}six-sevenths      { width:85.7142%; }
+
+
+    /**
      * Eighths
      */
     #{$class-type}#{$namespace}one-eighth        { width:12.5%; }
@@ -534,6 +545,8 @@ $class-type:            unquote(".") + $csswizard-grids-namespace !global;
     #{$class-type}push--#{$namespace}three-sixths        { @extend #{$class-type}push--#{$namespace}one-half; }
     #{$class-type}push--#{$namespace}four-sixths         { @extend #{$class-type}push--#{$namespace}two-thirds; }
     #{$class-type}push--#{$namespace}five-sixths         { left:83.333%; @include silent-relative(); }
+
+
 
 
     /**

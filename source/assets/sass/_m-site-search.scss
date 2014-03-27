@@ -1,9 +1,14 @@
 .site-search {
-  @extend %outline;
+  @include media-query($desk) {
+    display: block;
+    position: absolute;
+    top: $gutter--normal;
+    right: $gutter--normal;
+  }
 }
 
 .site-search, .site-search * {
-/*   background-color: $color--red !important; */
+
 }
 
 .site-search .module-header {
@@ -17,21 +22,31 @@
   overflow: hidden;
   position: absolute;
   width: 100%;
-  background-color: $color--blue;
+  background-color: $color--gray-darker;
   white-space: nowrap;
   box-shadow: 0 2px 3px rgba(0,0,0,0.3);
+
+  @include media-query($desk) {
+    height: inherit;
+    overflow: visible;
+    position: relative;
+    background-color: transparent;
+    box-shadow: none;
+  }
 }
 
 .site-search__input {
   white-space: nowrap;
   width: 100%;
   height: $size--touch-target;
-  padding-left: $gutter--skinny;
+  padding-left: $gutter--narrow;
   padding-right: $size--touch-target;
+  border: 1px solid $color--gray-dark;
   @include typecsset-font-size($size--base);
+  border-radius: 3px;
 
   &:focus {
-    border: 1px solid $color--red;
+    border: 1px solid $color--green;
     outline: none;
   }
 }
@@ -39,23 +54,34 @@
 .site-search__button {
   @extend %zero;
 
-  @extend %ir;
-
   position: absolute;
-  right: $gutter--skinny + 1;
-  margin-top: 1px;
-  width: $size--touch-target - 1;
+  right: $gutter--narrow + 2;
+  margin-top: 2px;
+  width: $size--touch-target - 2;
   white-space: nowrap;
-  height: $size--touch-target - 2;
-  background-color: $color--green;
-
+  height: $size--touch-target - 4;
   border: none;
+
+
+  @include media-query($desk) {
+    right: 2px;
+  }
+}
+
+.site-search__button .icon-search {
+    @extend %ir;
 
   background-image: url(../svg/zoom.svg);
   background-position: center center;
   background-size: 50%;
   background-repeat: no-repeat;
+  display: block;
+  height: 100%;
+  width: 100%;
+}
 
+.site-search__link {
+  display: none;
 }
 
 
@@ -67,7 +93,11 @@
   &:checked {
     & ~ .l-header .site-search .site-search__form {
       height: inherit;
-      padding: $gutter--skinny;
+      padding: $gutter--narrow;
+    }
+
+    & ~ .site-search__label {
+      background-color: $color--gray-darker;
     }
   }
 }

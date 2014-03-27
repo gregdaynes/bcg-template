@@ -1,44 +1,73 @@
-.advertisement {
+.advertisement,
+.advertisement--medium-rectangle,
+.advertisement--rising-star,
+.advertisement--vertical-banner,
+.advertisement--responsive,
+.advertisement--container {
+  margin: $gutter--narrow auto;
+  display: block;
 
-}
-
-.advertisement .module-header {
-  @extend %hide;
-}
-
-.advertisement a {
+  .module-header {
+    @extend %hide;
+  }
 
 }
 
 .advertisement__placeholder {
-  background-image: url(//placehold.it/300x50);
   background-position: left top;
   background-repeat: no-repeat;
-
-  width: 300px;
-  height: 50px;
-
   display: block;
-
-  margin: $gutter--narrow auto;
-}
-
-
-
-
-
-.advertisement--responsive {
-
-}
-
-.advertisement--responsive .module-header {
-
-}
-
-.advertisement--responsive .advertisement__link {
-
+  margin: 0 auto;
 }
 
 .advertisement--responsive .advertisement__placeholder {
+  background-image: url(//placehold.it/300x50);
+  width: 300px;
+  height: 50px;
 
+  @include media-query(em(468px)) {
+    height: 60px;
+    width: 468px;
+    background-image: url(//placehold.it/468x60);
+  }
+
+  @include media-query(em(728px)) {
+    height: 90px;
+    width: 728px;
+    background-image: url(//placehold.it/728x90);
+  }
+}
+
+.advertisement--medium-rectangle .advertisement__placeholder {
+  background-image: url(//placehold.it/300x250);
+  width: 300px;
+  height: 250px;
+}
+
+.advertisement--rising-star .advertisement__placeholder {
+  background-image: url(//placehold.it/300x50);
+  width: 300px;
+  height: 50px;
+}
+
+.advertisement--vertical-banner .advertisement__placeholder {
+  background-image: url(//placehold.it/140x280);
+  height: 280px;
+  width: 140px;
+}
+
+.advertisement--container-vertical-banner {
+  width: 300px;
+  margin: 0 auto;
+  @extend %clearfix;
+}
+
+.advertisement--container-vertical-banner .advertisement--vertical-banner {
+  width: 140px;
+  float: left;
+  @extend %zero;
+
+  &:first-child {
+    margin-right: 20px;
+  }
 }
